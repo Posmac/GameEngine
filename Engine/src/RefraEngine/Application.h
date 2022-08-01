@@ -7,6 +7,8 @@
 #include "RefraEngine/Events/Event.h"
 #include "RefraEngine/Events/ApplicationEvent.h"
 
+#include "RefraEngine/ImGui/ImGuiLayer.h"
+
 namespace rfe
 {
 	class RF_API Application
@@ -24,6 +26,7 @@ namespace rfe
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 		std::unique_ptr<Window> m_Window;
+		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 	private:

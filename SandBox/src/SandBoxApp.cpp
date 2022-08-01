@@ -1,6 +1,8 @@
 #include <RefraEngine.h>
 #include "glm/glm.hpp"
 
+#include "imgui/imgui.h"
+
 class ExampleLayer : public rfe::Layer
 {
 public:
@@ -15,6 +17,13 @@ public:
 		{
 			RF_CLIENT_TRACE("Tab key is pressed(poll)");
 		}
+	}
+
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
 	}
 
 	void OnEvent(rfe::Event& e) override
@@ -37,7 +46,6 @@ public:
 	SandBox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverlay(new rfe::ImGuiLayer());
 	}
 
 	~SandBox()
