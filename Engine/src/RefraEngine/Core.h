@@ -1,10 +1,14 @@
 #pragma once
 
 #ifdef RF_PLATFORM_WINDOWS
-	#ifdef RF_BUILD_DLL
-		#define RF_API __declspec(dllexport)
-	#else
-		#define RF_API __declspec(dllimport)
+	#if RF_DYNAMIC_LINK
+		#ifdef RF_BUILD_DLL
+			#define RF_API __declspec(dllexport)
+		#else
+			#define RF_API __declspec(dllimport)
+		#endif
+	#else 
+		#define RF_API
 	#endif
 #else
 	#error Engine supports only Windows platform!
