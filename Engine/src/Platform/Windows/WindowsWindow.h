@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RefraEngine/Window.h"
+#include "RefraEngine/Renderer/GraphicsContext.h"
 
 #include "GLFW/glfw3.h"
 
@@ -27,6 +28,7 @@ namespace rfe
 		virtual void ShutDown();
 	private:
 		GLFWwindow* m_Window;
+		GraphicsContext* m_Context;
 
 		struct WindowData
 		{
