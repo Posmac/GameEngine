@@ -17,6 +17,11 @@ namespace rfe
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		RF_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+		RF_CORE_INFO("OpenGL Info:");
+		RF_CORE_INFO("    Vendor {0}:", glGetString(GL_VENDOR));
+		RF_CORE_INFO("    Renderer {0}:", glGetString(GL_RENDERER));
+		RF_CORE_INFO("    Version {0}:", glGetString(GL_VERSION));
 	}
 
 	void OpenGLContext::SwapBuffers()

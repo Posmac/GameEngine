@@ -29,6 +29,8 @@ namespace rfe
 		ImGuiLayer* m_ImGuiLayer;
 		bool m_Running = true;
 		LayerStack m_LayerStack;
+
+		unsigned int VAO, VBO, EBO;
 	private:
 		static Application* s_Instance;
 	};
