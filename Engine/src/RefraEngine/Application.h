@@ -9,6 +9,8 @@
 
 #include "RefraEngine/ImGui/ImGuiLayer.h"
 
+#include "RefraEngine/Renderer/Shader.h"
+
 namespace rfe
 {
 	class RF_API Application
@@ -31,6 +33,8 @@ namespace rfe
 		LayerStack m_LayerStack;
 
 		unsigned int VAO, VBO, EBO;
+		std::unique_ptr<Shader> m_Shader;
+
 	private:
 		static Application* s_Instance;
 	};

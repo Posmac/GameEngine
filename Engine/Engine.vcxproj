@@ -168,6 +168,7 @@
     <ClInclude Include="src\RefraEngine\Log.h" />
     <ClInclude Include="src\RefraEngine\MouseButtonCodes.h" />
     <ClInclude Include="src\RefraEngine\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\RefraEngine\Renderer\Shader.h" />
     <ClInclude Include="src\RefraEngine\Window.h" />
     <ClInclude Include="src\rfpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -596,6 +597,7 @@
     <ClCompile Include="src\RefraEngine\Layer.cpp" />
     <ClCompile Include="src\RefraEngine\LayerStack.cpp" />
     <ClCompile Include="src\RefraEngine\Log.cpp" />
+    <ClCompile Include="src\RefraEngine\Renderer\Shader.cpp" />
     <ClCompile Include="src\rfpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
