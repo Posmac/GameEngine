@@ -149,6 +149,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
@@ -167,7 +168,9 @@
     <ClInclude Include="src\RefraEngine\LayerStack.h" />
     <ClInclude Include="src\RefraEngine\Log.h" />
     <ClInclude Include="src\RefraEngine\MouseButtonCodes.h" />
+    <ClInclude Include="src\RefraEngine\Renderer\Buffer.h" />
     <ClInclude Include="src\RefraEngine\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\RefraEngine\Renderer\Renderer.h" />
     <ClInclude Include="src\RefraEngine\Renderer\Shader.h" />
     <ClInclude Include="src\RefraEngine\Window.h" />
     <ClInclude Include="src\rfpch.h" />
@@ -588,6 +591,7 @@
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
@@ -597,6 +601,8 @@
     <ClCompile Include="src\RefraEngine\Layer.cpp" />
     <ClCompile Include="src\RefraEngine\LayerStack.cpp" />
     <ClCompile Include="src\RefraEngine\Log.cpp" />
+    <ClCompile Include="src\RefraEngine\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\RefraEngine\Renderer\Renderer.cpp" />
     <ClCompile Include="src\RefraEngine\Renderer\Shader.cpp" />
     <ClCompile Include="src\rfpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
