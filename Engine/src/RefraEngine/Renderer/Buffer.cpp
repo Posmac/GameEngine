@@ -11,11 +11,11 @@ namespace rfe
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:
-			RF_CORE_ASSERT(false, "VERTEX BUFFER CREATION::RendererAPI::None  is currently not supported");
-			return nullptr;
-		case RendererAPI::OpenGL:
-			return new OpenGLVertexBuffer(vertices, size);
+			case RendererAPI::None:
+				RF_CORE_ASSERT(false, "VERTEX BUFFER CREATION::RendererAPI::None  is currently not supported");
+				return nullptr;
+			case RendererAPI::OpenGL:
+				return new OpenGLVertexBuffer(vertices, size);
 		}
 
 		RF_CORE_ASSERT(false, "VERTEX BUFFER CREATION::Unknown RendererAPI");
@@ -26,11 +26,11 @@ namespace rfe
 	{
 		switch (Renderer::GetAPI())
 		{
-		case RendererAPI::None:
-			RF_CORE_ASSERT(false, "VERTEX BUFFER CREATION::RendererAPI::None  is currently not supported");
-			return nullptr;
-		case RendererAPI::OpenGL:
-			return new OpenGLIndexBuffer(vertices, count);
+			case RendererAPI::None:
+				RF_CORE_ASSERT(false, "VERTEX BUFFER CREATION::RendererAPI::None  is currently not supported");
+				return nullptr;
+			case RendererAPI::OpenGL:
+				return new OpenGLIndexBuffer(vertices, count);
 		}
 
 		RF_CORE_ASSERT(false, "VERTEX BUFFER CREATION::Unknown RendererAPI");

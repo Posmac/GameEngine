@@ -11,27 +11,6 @@ namespace rfe
 
 	Application* Application::s_Instance = nullptr;
 
-	static GLenum ShaderDataTypeToOpenGLBaseType(ShaderDataType type)
-	{
-		switch (type)
-		{
-			case ShaderDataType::Float:  return GL_FLOAT;
-			case ShaderDataType::Float2: return GL_FLOAT;
-			case ShaderDataType::Float3: return GL_FLOAT;
-			case ShaderDataType::Float4: return GL_FLOAT;
-			case ShaderDataType::Mat3:   return GL_FLOAT;
-			case ShaderDataType::Mat4:   return GL_FLOAT;
-			case ShaderDataType::Int:    return GL_INT;
-			case ShaderDataType::Int2:   return GL_INT;
-			case ShaderDataType::Int3:   return GL_INT;
-			case ShaderDataType::Int4:   return GL_INT;
-			case ShaderDataType::Bool:   return GL_BOOL;
-		}
-
-		RF_CORE_ASSERT(false, "Unknown Shader data type");
-		return 0;
-	}
-
 	Application::Application() {
 		RF_CORE_ASSERT(!s_Instance, "Application already exist");
 		s_Instance = this;
@@ -41,10 +20,7 @@ namespace rfe
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverlay(m_ImGuiLayer);
 
-
-		glGenVertexArrays(1, &VAO);
-		glBindVertexArray(VAO);
-
+		m_VertexArray.reset(VertexArray::Create());
 
 		float vertices[7 * 3] = {
 			-0.5f, -0.5f, 0.0f, 1.0, 0.0, 0.0, 1.0,
@@ -54,9 +30,8 @@ namespace rfe
 
 		unsigned int indices[3] = { 0, 1, 2 };
 
-		m_VertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
-		m_IndexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(unsigned int)));
-
+		std::shared_ptr<VertexBuffer> vertexBuffer; 
+		vertexBuffer.reset(VertexBuffer::Create(vertices, sizeof(vertices)));
 		{
 			BufferLayout layout =
 			{
@@ -64,23 +39,40 @@ namespace rfe
 				{ShaderDataType::Float4, "a_Color"}
 			};
 
-			m_VertexBuffer->SetLayout(layout);
+			vertexBuffer->SetLayout(layout);
 		}
+		std::shared_ptr<IndexBuffer> indexBuffer; 
+		indexBuffer.reset(IndexBuffer::Create(indices, sizeof(indices) / sizeof(unsigned int)));
 
-		uint32_t index = 0;
-		const auto& layout = m_VertexBuffer->GetLayout();
+		m_VertexArray->AddVertexBuffer(vertexBuffer);
+		m_VertexArray->SetIndexBuffer(indexBuffer);
 
-		for (const auto& el : layout)
+		m_BlueVertexArray.reset(VertexArray::Create());
+
+		float blueVertices[3 * 4] = {
+			-0.75f, -0.75f, 0.0f,
+			 0.75f, -0.75f, 0.0f,
+			 0.75f,  0.75f, 0.0f,
+			-0.75f,  0.75f, 0.0f
+		};
+
+		unsigned int blueIndices[6] = { 0, 1, 2, 2, 3, 0 };
+
+		std::shared_ptr<VertexBuffer> blueVertexBuffer;
+		blueVertexBuffer.reset(VertexBuffer::Create(blueVertices, sizeof(blueVertices)));
 		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index, el.GetComponentCount(),
-				ShaderDataTypeToOpenGLBaseType(el.Type),
-				el.Normalized ? GL_TRUE : GL_FALSE,
-				layout.GetStride(),
-				(const void*)el.Offset);
-			index++;
-		}
+			BufferLayout layout =
+			{
+				{ShaderDataType::Float3, "a_Position"}
+			};
 
+			blueVertexBuffer->SetLayout(layout);
+		}
+		std::shared_ptr<IndexBuffer> blueIndexBuffer;
+		blueIndexBuffer.reset(IndexBuffer::Create(blueIndices, sizeof(blueIndices) / sizeof(unsigned int)));
+
+		m_BlueVertexArray->AddVertexBuffer(blueVertexBuffer);
+		m_BlueVertexArray->SetIndexBuffer(blueIndexBuffer);
 
 		std::string vertexSrc = R"(
 			#version 330 core
@@ -115,6 +107,30 @@ namespace rfe
 		)";
 
 		m_Shader.reset(new Shader(vertexSrc, fragmentSrc));
+
+		std::string blueVertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+
+			void main()
+			{
+				gl_Position = vec4(a_Position, 1.0);	
+			}
+		)";
+
+		std::string blueFragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+
+			void main()
+			{
+				color = vec4(0.0, 0.2, 0.8, 1.0);
+			}
+		)";
+
+		m_BlueShader.reset(new Shader(blueVertexSrc, blueFragmentSrc));
 	}
 
 	Application::~Application(){
@@ -130,10 +146,14 @@ namespace rfe
 			{
 				glClearColor(1, 0, 1, 1);
 				glClear(GL_COLOR_BUFFER_BIT);
-			
+
+				m_BlueShader->Bind();
+				m_BlueVertexArray->Bind();
+				glDrawElements(GL_TRIANGLES, m_BlueVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+
 				m_Shader->Bind();
-				glBindVertexArray(VAO);
-				glDrawElements(GL_TRIANGLES, m_IndexBuffer->GetCount() , GL_UNSIGNED_INT, nullptr);
+				m_VertexArray->Bind();
+				glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 
 				for (Layer* layer : m_LayerStack)
 				{

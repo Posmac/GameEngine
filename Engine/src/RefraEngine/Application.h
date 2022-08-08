@@ -11,6 +11,7 @@
 
 #include "RefraEngine/Renderer/Shader.h"
 #include "RefraEngine/Renderer/Buffer.h"
+#include "RefraEngine/Renderer/VertexArray.h"
 
 namespace rfe
 {
@@ -33,10 +34,11 @@ namespace rfe
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		unsigned int VAO;
 		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
+		std::unique_ptr<VertexArray> m_VertexArray;
+
+		std::unique_ptr<Shader> m_BlueShader;
+		std::unique_ptr<VertexArray> m_BlueVertexArray;
 	private:
 		static Application* s_Instance;
 	};
