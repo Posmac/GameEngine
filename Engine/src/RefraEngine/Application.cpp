@@ -1,7 +1,7 @@
 #include "rfpch.h"
 #include "Application.h"
 
-#include <glad/glad.h>
+#include "RefraEngine/Renderer/Renderer.h"
 
 #include "Input.h"
 
@@ -144,16 +144,18 @@ namespace rfe
 		{ 
 			while (m_Running)
 			{
-				glClearColor(1, 0, 1, 1);
-				glClear(GL_COLOR_BUFFER_BIT);
+				RenderCommand::SetClearColor({ 1.0, 0.3, 0.2, 1.0 });
+				RenderCommand::Clear();
+
+				Renderer::BeginScene();
 
 				m_BlueShader->Bind();
-				m_BlueVertexArray->Bind();
-				glDrawElements(GL_TRIANGLES, m_BlueVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+				Renderer::Submit(m_BlueVertexArray);
 
 				m_Shader->Bind();
-				m_VertexArray->Bind();
-				glDrawElements(GL_TRIANGLES, m_VertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+				Renderer::Submit(m_VertexArray);
+
+				Renderer::EndScene();
 
 				for (Layer* layer : m_LayerStack)
 				{

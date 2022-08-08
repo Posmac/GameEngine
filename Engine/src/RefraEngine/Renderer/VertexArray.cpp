@@ -10,10 +10,10 @@ namespace rfe
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::None:
+			case RendererAPI::API::None:
 				RF_CORE_ASSERT(false, "VERTEX ARRAY CREATION::RendererAPI::None  is currently not supported");
 				return nullptr;
-			case RendererAPI::OpenGL:
+			case RendererAPI::API::OpenGL:
 				return new OpenGLVertexArray();
 		}
 

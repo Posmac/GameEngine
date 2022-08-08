@@ -34,11 +34,11 @@ namespace rfe
 		bool m_Running = true;
 		LayerStack m_LayerStack;
 
-		std::unique_ptr<Shader> m_Shader;
-		std::unique_ptr<VertexArray> m_VertexArray;
+		std::shared_ptr<Shader> m_Shader;
+		std::shared_ptr<VertexArray> m_VertexArray;
 
-		std::unique_ptr<Shader> m_BlueShader;
-		std::unique_ptr<VertexArray> m_BlueVertexArray;
+		std::shared_ptr<Shader> m_BlueShader;
+		std::shared_ptr<VertexArray> m_BlueVertexArray;
 	private:
 		static Application* s_Instance;
 	};
