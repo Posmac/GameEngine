@@ -13,6 +13,8 @@
 #include "RefraEngine/Renderer/Buffer.h"
 #include "RefraEngine/Renderer/VertexArray.h"
 
+#include "RefraEngine/Renderer/OrthographicCamera.h"
+
 namespace rfe
 {
 	class RF_API Application
@@ -39,6 +41,8 @@ namespace rfe
 
 		std::shared_ptr<Shader> m_BlueShader;
 		std::shared_ptr<VertexArray> m_BlueVertexArray;
+
+		OrthographicCamera m_Camera;
 	private:
 		static Application* s_Instance;
 	};

@@ -172,6 +172,7 @@
     <ClInclude Include="src\RefraEngine\MouseButtonCodes.h" />
     <ClInclude Include="src\RefraEngine\Renderer\Buffer.h" />
     <ClInclude Include="src\RefraEngine\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\RefraEngine\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\RefraEngine\Renderer\Renderer.h" />
     <ClInclude Include="src\RefraEngine\Renderer\RenderCommand.h" />
     <ClInclude Include="src\RefraEngine\Renderer\RendererAPI.h" />
@@ -609,6 +610,7 @@
     <ClCompile Include="src\RefraEngine\LayerStack.cpp" />
     <ClCompile Include="src\RefraEngine\Log.cpp" />
     <ClCompile Include="src\RefraEngine\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\RefraEngine\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\RefraEngine\Renderer\Renderer.cpp" />
     <ClCompile Include="src\RefraEngine\Renderer\RendererAPI.cpp" />
     <ClCompile Include="src\RefraEngine\Renderer\RenderCommand.cpp" />
